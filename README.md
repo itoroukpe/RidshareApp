@@ -33,6 +33,7 @@
 // └── pom.xml
 ```
 // --- User.java (Entity) ---
+```
 @Entity
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +46,9 @@ public class User {
     private boolean aiEnabled;
     private boolean mfaEnabled;
 }
-
+```
 // --- Income.java (Entity) ---
+```
 @Entity
 public class Income {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +58,9 @@ public class Income {
     private LocalDate date;
     @ManyToOne private User user;
 }
-
+```
 // --- Expense.java (Entity) ---
+```
 @Entity
 public class Expense {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,23 +71,27 @@ public class Expense {
     private LocalDate date;
     @ManyToOne private User user;
 }
-
+``
 // --- UserRepository.java ---
+```
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 }
-
+```
 // --- IncomeRepository.java ---
+```
 public interface IncomeRepository extends JpaRepository<Income, Long> {
     List<Income> findByUserId(Long userId);
 }
-
+```
 // --- ExpenseRepository.java ---
+```
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUserId(Long userId);
 }
-
+```
 // --- AuthService.java ---
+```
 @Service
 public class AuthService {
     @Autowired private UserRepository userRepository;
@@ -99,8 +106,9 @@ public class AuthService {
                 .filter(u -> u.getPassword().equals(password)); // hash check in real app
     }
 }
-
+```
 // --- ProfileController.java ---
+```
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
@@ -111,8 +119,9 @@ public class ProfileController {
         return ResponseEntity.ok(userRepo.save(user));
     }
 }
-
+```
 // --- IncomeController.java ---
+```
 @RestController
 @RequestMapping("/api/income")
 public class IncomeController {
@@ -128,8 +137,9 @@ public class IncomeController {
         return incomeRepo.findByUserId(userId);
     }
 }
-
+```
 // --- HTML Template (index.html) ---
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,8 +162,9 @@ public class IncomeController {
   <script src="/js/app.js"></script>
 </body>
 </html>
-
+```
 // --- app.js ---
+```
 document.getElementById('registerForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
@@ -167,27 +178,31 @@ document.getElementById('registerForm').addEventListener('submit', async functio
   const result = await response.json();
   alert('User registered: ' + result.email);
 });
-
+```
 // --- style.css ---
+```
 body { font-family: sans-serif; margin: 2rem; }
 form { display: flex; flex-direction: column; width: 300px; gap: 0.5rem; }
 input, select { padding: 0.5rem; }
-
+```
 // --- application.properties ---
+```
 spring.datasource.url=jdbc:postgresql://localhost:5432/taxtrackerdb
 spring.datasource.username=taxuser
 spring.datasource.password=taxpass
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-
+```
 // --- Application Entry Point ---
+```
 @SpringBootApplication
 public class TaxTrackerApp {
     public static void main(String[] args) {
         SpringApplication.run(TaxTrackerApp.class, args);
     }
 }
+```
 ---
 // --- Project: Rideshare Tax Tracker ---
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL
@@ -195,6 +210,7 @@ public class TaxTrackerApp {
 // [File structure remains unchanged. See previous implementation.]
 
 // --- ExpenseController.java ---
+```
 @RestController
 @RequestMapping("/api/expense")
 public class ExpenseController {
@@ -210,8 +226,9 @@ public class ExpenseController {
         return expenseRepo.findByUserId(userId);
     }
 }
-
+```
 // --- BlockchainService.java ---
+```
 @Service
 public class BlockchainService {
     public String verifyTransaction(Object record) {
@@ -219,8 +236,9 @@ public class BlockchainService {
         return UUID.randomUUID().toString();
     }
 }
-
+```
 // --- TaxService.java ---
+```
 @Service
 public class TaxService {
     public double estimateQuarterlyTax(List<Income> incomes, List<Expense> expenses) {
@@ -233,8 +251,9 @@ public class TaxService {
         return List.of("Fuel", "Repairs", "Insurance", "Tolls");
     }
 }
-
+```
 // --- dashboard.html (updated with Expense Tracking UI) ---
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -261,8 +280,9 @@ public class TaxService {
   <script src="/js/app.js"></script>
 </body>
 </html>
-
+```
 // --- app.js (expense tracking logic added) ---
+```
 document.getElementById('expenseForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
@@ -294,13 +314,15 @@ async function loadExpenses() {
 }
 
 window.onload = loadExpenses;
-
+```
 // --- style.css (minor additions for dashboard) ---
+```
 section { margin-top: 2rem; }
 ul { list-style: none; padding: 0; }
 li { padding: 0.5rem; border-bottom: 1px solid #ccc; }
-
+```
 // --- pom.xml (reminder for SHA256 or external lib for real blockchain hash if needed) ---
+```
 <!-- Add Apache Commons Codec if needed for SHA256 -->
 <!--
 <dependency>
@@ -309,7 +331,7 @@ li { padding: 0.5rem; border-bottom: 1px solid #ccc; }
   <version>1.15</version>
 </dependency>
 -->
-
+```
 // [Other backend logic remains unchanged. Ready for OAuth & MFA integration next.]
 ---
 ✅ I've added the following backend and frontend features to your Rideshare Tax Tracker application:
@@ -351,6 +373,7 @@ Great! Since you answered "yes", I'll proceed by **adding OAuth (Google/Facebook
 ### 🔐 1. **OAuth 2.0 Login with Google and Facebook**
 
 #### 📦 **Add Dependencies in `pom.xml`**
+
 ```xml
 <dependency>
   <groupId>org.springframework.boot</groupId>
@@ -502,6 +525,7 @@ Let me know and I’ll get it implemented!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA
 
 // --- MFAController.java ---
+```
 @RestController
 @RequestMapping("/api/mfa")
 public class MFAController {
@@ -525,8 +549,9 @@ public class MFAController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
     }
 }
-
+```
 // --- EmailService.java ---
+```
 @Service
 public class EmailService {
     @Autowired private JavaMailSender mailSender;
@@ -539,8 +564,9 @@ public class EmailService {
         mailSender.send(message);
     }
 }
-
+```
 // --- SecurityConfig.java (OAuth2 + MFA support) ---
+```
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -556,8 +582,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .defaultSuccessUrl("/otp-verify", true);
     }
 }
-
+```
 // --- login.html (OAuth login options) ---
+```
 <!DOCTYPE html>
 <html>
 <head><title>Login</title></head>
@@ -567,8 +594,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   <a href="/oauth2/authorization/facebook">Facebook</a>
 </body>
 </html>
-
+```
 // --- otp-verify.html ---
+```
 <!DOCTYPE html>
 <html>
 <head><title>OTP Verification</title></head>
@@ -593,8 +621,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   </script>
 </body>
 </html>
-
+```
 // --- application.properties (Email + OAuth setup placeholders) ---
+```
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=your-email@gmail.com
@@ -612,6 +641,7 @@ spring.security.oauth2.client.registration.facebook.scope=email,public_profile
 spring.security.oauth2.client.provider.facebook.authorization-uri=https://www.facebook.com/dialog/oauth
 spring.security.oauth2.client.provider.facebook.token-uri=https://graph.facebook.com/oauth/access_token
 spring.security.oauth2.client.provider.facebook.user-info-uri=https://graph.facebook.com/me?fields=id,name,email
+```
 ---
 ✅ The **Fleet Owner Dashboard** has been added to your application!
 
@@ -637,6 +667,7 @@ Let me know which one you'd like next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA
 
 // --- FleetController.java ---
+```
 @RestController
 @RequestMapping("/api/fleet")
 public class FleetController {
@@ -668,8 +699,9 @@ public class FleetController {
         return summary;
     }
 }
-
+```
 // --- fleet-dashboard.html ---
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -718,6 +750,7 @@ public class FleetController {
   </script>
 </body>
 </html>
+```
 ---
 ✅ The **Fleet Owner Dashboard** has been added to your application!
 
@@ -743,6 +776,7 @@ Let me know which one you'd like next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -751,8 +785,9 @@ Let me know which one you'd like next!
   <type>pom</type>
 </dependency>
 -->
-
+```
 // --- ReportService.java ---
+```
 @Service
 public class ReportService {
     public byte[] generateTaxReport(User user, List<Income> incomes, List<Expense> expenses) throws IOException {
@@ -786,8 +821,9 @@ public class ReportService {
         return outputStream.toByteArray();
     }
 }
-
+```
 // --- ReportController.java ---
+```
 @RestController
 @RequestMapping("/api/report")
 public class ReportController {
@@ -811,8 +847,9 @@ public class ReportController {
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
 }
-
+```
 // --- HTML Button to Download PDF ---
+```
 <!-- Add this to dashboard.html or fleet-dashboard.html -->
 <section>
   <h2>Download Tax Report</h2>
@@ -823,6 +860,7 @@ function downloadReport() {
   window.open('/api/report/pdf/1', '_blank'); // assume user ID = 1
 }
 </script>
+```
 ---
 ✅ The **PDF Tax Report Export** feature is now integrated!
 
@@ -844,6 +882,7 @@ Let me know and I’ll implement the next feature right away!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -861,8 +900,9 @@ Let me know and I’ll implement the next feature right away!
   <version>22.15.0</version>
 </dependency>
 -->
-
+```
 // --- StripeService.java ---
+```
 @Service
 public class StripeService {
     static {
@@ -883,8 +923,9 @@ public class StripeService {
         return Session.create(params);
     }
 }
-
+```
 // --- SubscriptionController.java ---
+```
 @RestController
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
@@ -901,8 +942,9 @@ public class SubscriptionController {
         return ResponseEntity.ok(response);
     }
 }
-
+```
 // --- HTML Subscription Button (dashboard.html or index.html) ---
+```
 <section>
   <h2>Subscription</h2>
   <button onclick="subscribeNow()">Upgrade to Premium</button>
@@ -916,6 +958,7 @@ function subscribeNow() {
     });
 }
 </script>
+```
 ---
 ✅ Subscription and payment integration using **Stripe** has been successfully added!
 
@@ -938,6 +981,7 @@ Let me know what you’d like to add next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -955,8 +999,9 @@ Let me know what you’d like to add next!
   <version>22.15.0</version>
 </dependency>
 -->
-
+```
 // --- StripeService.java ---
+```
 @Service
 public class StripeService {
     static {
@@ -977,8 +1022,9 @@ public class StripeService {
         return Session.create(params);
     }
 }
-
+```
 // --- SubscriptionController.java ---
+```
 @RestController
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
@@ -995,8 +1041,9 @@ public class SubscriptionController {
         return ResponseEntity.ok(response);
     }
 }
-
+```
 // --- AIOptimizationService.java ---
+```
 @Service
 public class AIOptimizationService {
     public List<String> generateRecommendations(List<Expense> expenses, List<Income> incomes) {
@@ -1015,8 +1062,9 @@ public class AIOptimizationService {
         return recommendations;
     }
 }
-
+```
 // --- AIOptimizationController.java ---
+```
 @RestController
 @RequestMapping("/api/ai")
 public class AIOptimizationController {
@@ -1031,8 +1079,9 @@ public class AIOptimizationController {
         return aiService.generateRecommendations(expenses, incomes);
     }
 }
-
+```
 // --- HTML AI Recommendations (dashboard.html) ---
+```
 <section>
   <h2>AI Tax Tips</h2>
   <ul id="aiTips"></ul>
@@ -1053,6 +1102,7 @@ function loadAITips() {
     });
 }
 </script>
+```
 ---
 ✅ The **AI-Powered Tax Optimization Dashboard** is now implemented!
 
@@ -1075,6 +1125,7 @@ Let me know which feature to implement next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -1092,8 +1143,9 @@ Let me know which feature to implement next!
   <version>22.15.0</version>
 </dependency>
 -->
-
+```
 // --- StripeService.java ---
+```
 @Service
 public class StripeService {
     static {
@@ -1114,8 +1166,9 @@ public class StripeService {
         return Session.create(params);
     }
 }
-
+```
 // --- SubscriptionController.java ---
+```
 @RestController
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
@@ -1132,8 +1185,9 @@ public class SubscriptionController {
         return ResponseEntity.ok(response);
     }
 }
-
+```
 // --- AIOptimizationService.java ---
+```
 @Service
 public class AIOptimizationService {
     public List<String> generateRecommendations(List<Expense> expenses, List<Income> incomes) {
@@ -1152,8 +1206,9 @@ public class AIOptimizationService {
         return recommendations;
     }
 }
-
+```
 // --- AIOptimizationController.java ---
+```
 @RestController
 @RequestMapping("/api/ai")
 public class AIOptimizationController {
@@ -1168,8 +1223,9 @@ public class AIOptimizationController {
         return aiService.generateRecommendations(expenses, incomes);
     }
 }
-
+```
 // --- TaxFormService.java ---
+```
 @Service
 public class TaxFormService {
     public byte[] generateScheduleC(User user, List<Income> incomes, List<Expense> expenses) throws IOException {
@@ -1193,8 +1249,9 @@ public class TaxFormService {
         return outputStream.toByteArray();
     }
 }
-
+```
 // --- TaxFormController.java ---
+```
 @RestController
 @RequestMapping("/api/forms")
 public class TaxFormController {
@@ -1217,8 +1274,9 @@ public class TaxFormController {
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
 }
-
+```
 // --- HTML Button for Schedule C Download (dashboard.html) ---
+```
 <section>
   <h2>IRS Forms</h2>
   <button onclick="downloadScheduleC()">Download Schedule C</button>
@@ -1228,6 +1286,7 @@ function downloadScheduleC() {
   window.open('/api/forms/schedule-c/1', '_blank');
 }
 </script>
+```
 ---
 ✅ Auto-generation of **IRS Schedule C forms** is now implemented!
 
@@ -1250,6 +1309,7 @@ Let me know which you'd like next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -1276,8 +1336,9 @@ Let me know which you'd like next!
   <version>1.15</version>
 </dependency>
 -->
-
+```
 // --- BlockchainService.java ---
+```
 @Service
 public class BlockchainService {
     private final List<String> ledger = new ArrayList<>();
@@ -1295,8 +1356,9 @@ public class BlockchainService {
         return Collections.unmodifiableList(ledger);
     }
 }
-
+```
 // --- BlockchainController.java ---
+```
 @RestController
 @RequestMapping("/api/blockchain")
 public class BlockchainController {
@@ -1313,6 +1375,7 @@ public class BlockchainController {
         return ResponseEntity.ok(blockchainService.getLedger());
     }
 }
+```
 ---
 ✅ The **Blockchain-stamped recordkeeping** system is now integrated!
 
@@ -1338,6 +1401,7 @@ Let me know what you’d like to build or finalize next!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain, Multilingual UI, AI Chatbot
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -1366,8 +1430,9 @@ Let me know what you’d like to build or finalize next!
 -->
 
 <!-- Add Thymeleaf i18n support (already available via spring-boot-starter-thymeleaf) -->
-
+```
 // --- BlockchainService.java ---
+```
 @Service
 public class BlockchainService {
     private final List<String> ledger = new ArrayList<>();
@@ -1385,8 +1450,9 @@ public class BlockchainService {
         return Collections.unmodifiableList(ledger);
     }
 }
-
+```
 // --- BlockchainController.java ---
+```
 @RestController
 @RequestMapping("/api/blockchain")
 public class BlockchainController {
@@ -1403,29 +1469,34 @@ public class BlockchainController {
         return ResponseEntity.ok(blockchainService.getLedger());
     }
 }
-
+```
 // --- messages_en.properties ---
+```
 greeting=Hello
 subscription=Upgrade to Premium
 report.download=Download Schedule C
-
+```
 // --- messages_es.properties ---
+```
 greeting=Hola
 subscription=Actualizar a Premium
 report.download=Descargar Schedule C
-
+```
 // --- messages_fr.properties ---
+```
 greeting=Bonjour
 subscription=Mise à niveau Premium
 report.download=Télécharger Schedule C
-
+```
 // --- Thymeleaf Template Sample ---
+```
 <!-- dashboard.html (Thymeleaf version with i18n support) -->
 <h1 th:text="#{greeting}"></h1>
 <button th:text="#{subscription}"></button>
 <a th:text="#{report.download}" href="/api/forms/schedule-c/1"></a>
-
+```
 // --- AI Chatbot Frontend Widget (Insert in base layout) ---
+```
 <script>
 function sendChatMessage(msg) {
   const reply = aiBot(msg);
@@ -1445,6 +1516,7 @@ function aiBot(message) {
 </script>
 <div id="chatBox" style="position:fixed;bottom:0;right:10px;width:250px;height:300px;border:1px solid #ccc;overflow:auto;padding:10px;background:#fff;"></div>
 <input type="text" id="chatInput" placeholder="Ask a question..." style="position:fixed;bottom:0;right:10px;width:250px;" onkeypress="if(event.key==='Enter'){sendChatMessage(this.value);this.value='';}">
+```
 ---
 ✅ Multilingual UI and a lightweight AI chatbot are now integrated!
 
@@ -1471,6 +1543,7 @@ Let me know how you'd like to proceed!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain, Multilingual UI, AI Chatbot, IRS 1099 Generation
 
 // --- Add iText PDF Dependency in pom.xml ---
+```
 <!--
 <dependency>
   <groupId>com.itextpdf</groupId>
@@ -1499,8 +1572,9 @@ Let me know how you'd like to proceed!
 -->
 
 <!-- Add Thymeleaf i18n support (already available via spring-boot-starter-thymeleaf) -->
-
+```
 // --- 1099FormService.java ---
+```
 @Service
 public class Form1099Service {
     public byte[] generate1099Form(User user, List<Income> incomes) throws IOException {
@@ -1520,8 +1594,9 @@ public class Form1099Service {
         return outputStream.toByteArray();
     }
 }
-
+```
 // --- 1099FormController.java ---
+```
 @RestController
 @RequestMapping("/api/forms")
 public class Form1099Controller {
@@ -1542,8 +1617,9 @@ public class Form1099Controller {
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
 }
-
+```
 // --- HTML Button for 1099 Download (dashboard.html) ---
+```
 <section>
   <h2>IRS Forms</h2>
   <button onclick="downloadScheduleC()">Download Schedule C</button>
@@ -1557,6 +1633,7 @@ function download1099() {
   window.open('/api/forms/1099/1', '_blank');
 }
 </script>
+```
 ---
 ✅ IRS **Form 1099-NEC generation** is now implemented!
 
@@ -1663,6 +1740,7 @@ Let me know how you'd like to wrap it up!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain, Multilingual UI, AI Chatbot, IRS 1099 Generation, Docker, Jenkins
 
 // --- docker-compose.yml ---
+```
 version: '3.8'
 services:
   db:
@@ -1690,8 +1768,9 @@ services:
 
 volumes:
   pgdata:
-
+```
 // --- Jenkinsfile (Jenkins CI/CD Pipeline) ---
+```
 pipeline {
     agent any
 
@@ -1734,8 +1813,9 @@ pipeline {
         }
     }
 }
-
+```
 // --- Procfile for Heroku Deployment ---
+```
 web: java -jar target/rideshare-tax-tracker.jar
 
 // --- Dockerfile ---
@@ -1743,6 +1823,7 @@ FROM openjdk:17
 VOLUME /tmp
 COPY target/rideshare-tax-tracker.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
 ---
 ✅ Your project is now deployment-ready with:
 
@@ -1773,6 +1854,7 @@ Let me know how you'd like to wrap and distribute the full solution!
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain, Multilingual UI, AI Chatbot, IRS 1099 Generation, Docker, Jenkins
 
 // --- docker-compose.yml ---
+```
 version: '3.8'
 services:
   db:
@@ -1800,8 +1882,10 @@ services:
 
 volumes:
   pgdata:
+```
 
 // --- Jenkinsfile (Jenkins CI/CD Pipeline) ---
+```
 pipeline {
     agent any
 
@@ -1851,8 +1935,9 @@ pipeline {
         }
     }
 }
-
+```
 // --- Procfile for Heroku Deployment ---
+
 web: java -jar target/rideshare-tax-tracker.jar
 
 // --- Dockerfile ---
@@ -1932,6 +2017,7 @@ Happy launching! 🚀
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL, OAuth2, MFA, PDF Export, Subscription, AI Tax Optimization, IRS Form Generation, Blockchain, Multilingual UI, AI Chatbot, IRS 1099 Generation, Docker, Jenkins
 
 // --- docker-compose.yml ---
+```
 version: '3.8'
 services:
   db:
@@ -2010,17 +2096,19 @@ pipeline {
         }
     }
 }
-
+```
 // --- Procfile for Heroku Deployment ---
 web: java -jar target/rideshare-tax-tracker.jar
 
 // --- Dockerfile ---
+```
 FROM openjdk:17
 VOLUME /tmp
 COPY target/rideshare-tax-tracker.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
-
+```
 // --- README.md (Developer Onboarding) ---
+
 # Rideshare Tax Tracker
 
 ## Overview
