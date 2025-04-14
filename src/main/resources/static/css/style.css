@@ -1,1 +1,4 @@
-
+// --- style.css ---
+body { font-family: sans-serif; margin: 2rem; }
+form { display: flex; flex-direction: column; width: 300px; gap: 0.5rem; }
+input, select { padding: 0.5rem; }
