@@ -208,7 +208,7 @@ public class TaxTrackerApp {
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL
 
 // [File structure remains unchanged. See previous implementation.]
-
+---
 // --- ExpenseController.java ---
 ```
 @RestController
