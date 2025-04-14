@@ -71,7 +71,7 @@ public class Expense {
     private LocalDate date;
     @ManyToOne private User user;
 }
-``
+```
 // --- UserRepository.java ---
 ```
 public interface UserRepository extends JpaRepository<User, Long> {
