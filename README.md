@@ -1,7 +1,7 @@
 # RidshareApp
 // --- Project: Rideshare Tax Tracker ---
 // Technologies: Java (Spring Boot), HTML, CSS, JavaScript, PostgreSQL
-
+```
 // --- File Structure ---
 // rideshare-tax-tracker/
 // ├── src/
@@ -31,7 +31,7 @@
 // │   │   │   ├── templates/dashboard.html
 // │   │   │   └── application.properties
 // └── pom.xml
-
+```
 // --- User.java (Entity) ---
 @Entity
 public class User {
