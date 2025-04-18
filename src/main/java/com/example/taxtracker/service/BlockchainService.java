@@ -1,3 +1,7 @@
+
+package com.example.taxtracker.service;
+
+import org.springframework.stereotype.Service;
 package com.rondus.taxtracker.service;
 
 import org.apache.commons.codec.binary.Hex;
