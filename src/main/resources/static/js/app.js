@@ -155,3 +155,11 @@ function aiBot(message) {
   return 'How can I assist with your tax needs today?';
 }
 
+function downloadScheduleC() {
+  window.open('/api/forms/schedule-c/1', '_blank');
+}
+
+function download1099() {
+  window.open('/api/forms/1099/1', '_blank');
+}
+
