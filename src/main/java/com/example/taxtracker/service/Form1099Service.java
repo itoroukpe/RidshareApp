@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.taxtracker.model.User;
+import com.example.taxtracker.model.Income;
 
 @Service
 public class Form1099Service {
