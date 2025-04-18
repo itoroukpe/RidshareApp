@@ -1,8 +1,8 @@
 package com.example.taxtracker.service;
-
-import org.springframework.stereotype.Service;
 import com.example.taxtracker.model.Expense;
 import com.example.taxtracker.model.Income;
+
+import org.springframework.stereotype.Service;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
