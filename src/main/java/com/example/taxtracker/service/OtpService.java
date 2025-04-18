@@ -1,5 +1,6 @@
 // --- File: OtpService.java ---
 package com.rondus.taxtracker.service;
+package com.example.taxtracker.service;
 
 import org.springframework.stereotype.Service;
 
