@@ -1,4 +1,4 @@
-// ===== User Registration =====
+// ===== DOM-Ready Initialization =====
 document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('registerForm');
   if (registerForm) {
@@ -18,39 +18,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Load expenses if form is present
-  if (document.getElementById('expenseForm')) {
+  const expenseForm = document.getElementById('expenseForm');
+  if (expenseForm) {
+    expenseForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const expense = Object.fromEntries(formData);
+      expense.user = { id: 1 }; // Simulated user ID
+
+      const res = await fetch('/api/expense/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(expense)
+      });
+
+      const saved = await res.json();
+      alert('Expense added: $' + saved.amount);
+      e.target.reset();
+      loadExpenses();
+    });
+  }
+
+  if (document.getElementById('expenseList')) {
     loadExpenses();
   }
 
-  // Load fleet dashboard if present
   if (document.getElementById('driverList')) {
     loadDrivers();
   }
 });
 
-// ===== Expense Tracking =====
-const expenseForm = document.getElementById('expenseForm');
-if (expenseForm) {
-  expenseForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const expense = Object.fromEntries(formData);
-    expense.user = { id: 1 };
-
-    const res = await fetch('/api/expense/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(expense)
-    });
-
-    const saved = await res.json();
-    alert('Expense added: $' + saved.amount);
-    e.target.reset();
-    loadExpenses();
-  });
-}
-
+// ===== Load Expenses =====
 async function loadExpenses() {
   const res = await fetch('/api/expense/user/1');
   const expenses = await res.json();
@@ -63,76 +61,6 @@ async function loadExpenses() {
     li.textContent = `${exp.category}: $${exp.amount} - ${exp.description}`;
     list.appendChild(li);
   });
-}
-
-// ===== IRS Forms Download =====
-function downloadScheduleC() {
-  window.open('/api/forms/schedule-c/1', '_blank');
-}
-
-function download1099() {
-  window.open('/api/forms/1099/1', '_blank');
-}
-
-// ===== Stripe Subscription Checkout =====
-function subscribeNow() {
-  fetch('/api/subscription/checkout')
-    .then(res => res.json())
-    .then(data => {
-      window.location.href = data.url;
-    });
-}
-
-// ========== Subscription Checkout ==========
-function subscribeNow() {
-  fetch('/api/subscription/checkout')
-    .then(res => res.json())
-    .then(data => {
-      window.location.href = data.url;
-    })
-    .catch(err => console.error('Subscription error:', err));
-}
-
-// ========== Download IRS Forms ==========
-function downloadScheduleC() {
-  window.open('/api/forms/schedule-c/1', '_blank');
-}
-
-function download1099() {
-  window.open('/api/forms/1099/1', '_blank');
-}
-
-// ========== Load AI Tips ==========
-function loadAITips() {
-  fetch('/api/ai/recommendations/1')
-    .then(res => res.json())
-    .then(tips => {
-      const list = document.getElementById('aiTips');
-      list.innerHTML = '';
-      tips.forEach(tip => {
-        const li = document.createElement('li');
-        li.textContent = tip;
-        list.appendChild(li);
-      });
-    })
-    .catch(err => {
-      console.error('Failed to load AI tips:', err);
-    });
-}
-
-// ===== AI Tax Optimization Tips =====
-function loadAITips() {
-  fetch('/api/ai/recommendations/1')
-    .then(res => res.json())
-    .then(tips => {
-      const list = document.getElementById('aiTips');
-      list.innerHTML = '';
-      tips.forEach(tip => {
-        const li = document.createElement('li');
-        li.textContent = tip;
-        list.appendChild(li);
-      });
-    });
 }
 
 // ===== Fleet Dashboard =====
@@ -162,6 +90,51 @@ async function loadDriverSummary(driverId) {
     <p>Total Expenses: $${summary.totalExpenses}</p>
     <p>Net Profit: $${summary.netProfit}</p>
   `;
+}
+
+// ===== IRS Forms Download =====
+function downloadScheduleC() {
+  window.open('/api/forms/schedule-c/1', '_blank');
+}
+
+function download1099() {
+  window.open('/api/forms/1099/1', '_blank');
+}
+
+// ===== Stripe Subscription Checkout =====
+function subscribeNow() {
+  fetch('/api/subscription/checkout')
+    .then(res => res.json())
+    .then(data => {
+      window.location.href = data.url;
+    })
+    .catch(err => {
+      alert('Error starting subscription checkout.');
+      console.error('Subscription error:', err);
+    });
+}
+
+// ===== AI Tax Optimization Tips =====
+function loadAITips() {
+  const list = document.getElementById('aiTips');
+  if (!list) return;
+
+  list.innerHTML = '<li>Loading tips...</li>';
+
+  fetch('/api/ai/recommendations/1')
+    .then(res => res.json())
+    .then(tips => {
+      list.innerHTML = '';
+      tips.forEach(tip => {
+        const li = document.createElement('li');
+        li.textContent = tip;
+        list.appendChild(li);
+      });
+    })
+    .catch(err => {
+      list.innerHTML = '<li style="color:red;">Failed to load AI tips.</li>';
+      console.error('Failed to load AI tips:', err);
+    });
 }
 
 // ===== AI Chatbot Widget =====
