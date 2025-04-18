@@ -1,3 +1,5 @@
+package com.rondus.taxtracker.service;
+
 @Service
 public class EmailService {
     @Autowired private JavaMailSender mailSender;
