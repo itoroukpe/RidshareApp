@@ -1,12 +1,18 @@
-// --- dashboard.html (updated with Expense Tracking UI) ---
+// --- dashboard.html (Thymeleaf-enabled & responsive) ---
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard - Rideshare Tax Tracker</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <h1>Dashboard</h1>
+
+  <section>
+    <h2 th:text="'Welcome, ' + ${session.userEmail}"></h2>
+  </section>
+
   <section>
     <h2>Add Expense</h2>
     <form id="expenseForm">
@@ -22,6 +28,30 @@
     <ul id="expenseList"></ul>
   </section>
 
+  <section>
+    <h2>Subscription</h2>
+    <div th:if="${session.premium}">
+      <p>You are on a Premium plan.</p>
+    </div>
+    <div th:unless="${session.premium}">
+      <button onclick="subscribeNow()">Upgrade to Premium</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tax Optimization Tips</h2>
+    <ul id="aiTips"></ul>
+  </section>
+
   <script src="/js/app.js"></script>
+  <script>
+    function subscribeNow() {
+      fetch('/api/subscription/checkout')
+        .then(res => res.json())
+        .then(data => {
+          window.location.href = data.url;
+        });
+    }
+  </script>
 </body>
 </html>
