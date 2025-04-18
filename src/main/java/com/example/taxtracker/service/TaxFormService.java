@@ -1,3 +1,7 @@
+
+package com.example.taxtracker.service;
+
+import org.springframework.stereotype.Service;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
