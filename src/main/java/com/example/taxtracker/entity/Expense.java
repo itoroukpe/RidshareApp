@@ -1,4 +1,6 @@
-import javax.persistence.*;          // For Entity, Id, GeneratedValue, etc.
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
