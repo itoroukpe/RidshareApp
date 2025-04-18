@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fleet Owner Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1>Fleet Owner Dashboard</h1>
+
+  <section>
+    <h2>Driver List</h2>
+    <ul id="driverList"></ul>
+  </section>
+
+  <section>
+    <h2>Driver Summary</h2>
+    <div id="driverSummary"></div>
+  </section>
+
+  <script>
+    async function loadDrivers() {
+      const res = await fetch('/api/fleet/drivers?ownerEmail=owner@example.com');
+      const drivers = await res.json();
+      const list = document.getElementById('driverList');
+      list.innerHTML = '';
+      drivers.forEach(driver => {
+        const li = document.createElement('li');
+        li.textContent = driver.email + ' (' + driver.id + ')';
+        li.onclick = () => loadDriverSummary(driver.id);
+        list.appendChild(li);
+      });
+    }
+
+    async function loadDriverSummary(driverId) {
+      const res = await fetch('/api/fleet/summary/' + driverId);
+      const summary = await res.json();
+      const view = document.getElementById('driverSummary');
+      view.innerHTML = `
+        <p>Total Income: $${summary.totalIncome}</p>
+        <p>Total Expenses: $${summary.totalExpenses}</p>
+        <p>Net Profit: $${summary.netProfit}</p>
+      `;
+    }
+
+    window.onload = loadDrivers;
+  </script>
+</body>
+</html>
