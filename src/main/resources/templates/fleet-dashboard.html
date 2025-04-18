@@ -16,7 +16,12 @@
     <h2>Driver Summary</h2>
     <div id="driverSummary"></div>
   </section>
-
+  
+  <section>
+  <h2>Download Tax Report</h2>
+  <button onclick="downloadReport()">Download PDF</button>
+  </section>
+  
   <script>
     async function loadDrivers() {
       const res = await fetch('/api/fleet/drivers?ownerEmail=owner@example.com');
@@ -30,7 +35,11 @@
         list.appendChild(li);
       });
     }
-
+    
+    function downloadReport() {
+    window.open('/api/report/pdf/1', '_blank'); // assume user ID = 1
+    }
+    
     async function loadDriverSummary(driverId) {
       const res = await fetch('/api/fleet/summary/' + driverId);
       const summary = await res.json();
