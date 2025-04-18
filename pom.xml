@@ -79,12 +79,16 @@
         </dependency>
 
         <!-- iText Layout for PDF generation (community version) -->
-        <dependency>
-            <groupId>com.itextpdf.layout</groupId>
-            <artifactId>layout</artifactId>
-            <version>7.1.15</version>
-        </dependency>
 
+        <!-- iText Community Edition Core PDF Functionality -->
+         <dependency>
+             <groupId>com.itextpdf</groupId>
+             <artifactId>itext7-core</artifactId>
+             <version>7.1.15</version>
+             <type>pom</type>
+        </dependency>
+     
+        
         <!-- Swagger/OpenAPI (SpringDoc) -->
         <dependency>
             <groupId>org.springdoc</groupId>
