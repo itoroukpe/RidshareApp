@@ -1,5 +1,5 @@
 package com.example.taxtracker.service;
-import org.springframework.beans.factory.annotation.Autowired; // 👈 Add this
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 import com.example.taxtracker.repository.UserRepository; // Example of another import
