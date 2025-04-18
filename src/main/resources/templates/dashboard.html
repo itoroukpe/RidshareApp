@@ -48,30 +48,15 @@
     <button onclick="loadAITips()">Show AI Suggestions</button>
   </section>
 
-  <!-- Scripts -->
-  <script src="/js/app.js"></script>
-  <script>
-    function subscribeNow() {
-      fetch('/api/subscription/checkout')
-        .then(res => res.json())
-        .then(data => {
-          window.location.href = data.url;
-        });
-    }
+  <!-- IRS Forms -->
+  <section>
+    <h2>IRS Forms</h2>
+    <button onclick="downloadScheduleC()">Download Schedule C</button>
+    <button onclick="download1099()">Download Form 1099</button>
+  </section>
 
-    function loadAITips() {
-      fetch('/api/ai/recommendations/1')
-        .then(res => res.json())
-        .then(tips => {
-          const list = document.getElementById('aiTips');
-          list.innerHTML = '';
-          tips.forEach(tip => {
-            const li = document.createElement('li');
-            li.textContent = tip;
-            list.appendChild(li);
-          });
-        });
-    }
-  </script>
+  <!-- External App Script -->
+  <script src="/js/app.js"></script>
 </body>
 </html>
+
