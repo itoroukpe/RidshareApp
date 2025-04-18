@@ -1,3 +1,9 @@
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+
 @Service
 public class ReportService {
     public byte[] generateTaxReport(User user, List<Income> incomes, List<Expense> expenses) throws IOException {
