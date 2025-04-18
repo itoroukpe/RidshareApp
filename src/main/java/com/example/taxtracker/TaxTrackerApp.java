@@ -1,3 +1,7 @@
+package com.example.taxtracker.service;
+
+import org.springframework.stereotype.Service;
+
 // --- Application Entry Point ---
 
 @SpringBootApplication
