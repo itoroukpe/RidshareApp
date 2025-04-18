@@ -16,6 +16,19 @@
         <spring.boot.version>3.1.2</spring.boot.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- iText BOM for full PDF module support -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>itext7-bom</artifactId>
+                <version>7.1.15</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
@@ -38,6 +51,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <!-- OAuth2 -->
         <dependency>
@@ -45,7 +62,7 @@
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
-        <!-- PostgreSQL -->
+        <!-- PostgreSQL Driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -58,12 +75,15 @@
             <version>22.15.0</version>
         </dependency>
 
-        <!-- iText PDF (Community Version) -->
+        <!-- iText Core + Layout -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext7-core</artifactId>
-            <version>7.1.15</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf.layout</groupId>
+            <artifactId>layout</artifactId>
         </dependency>
 
         <!-- Swagger/OpenAPI (SpringDoc) -->
@@ -73,7 +93,7 @@
             <version>2.2.0</version>
         </dependency>
 
-        <!-- Blockchain hashing (Apache Commons Codec) -->
+        <!-- Commons Codec for Blockchain hashing -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -84,6 +104,14 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <!-- DevTools for hot reload (dev only) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- Testing -->
