@@ -16,6 +16,14 @@
         <spring.boot.version>3.1.2</spring.boot.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>itext</id>
+            <name>iText Repository</name>
+            <url>https://repo.itextsupport.com/releases</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
@@ -146,3 +154,4 @@
     </build>
 
 </project>
+
