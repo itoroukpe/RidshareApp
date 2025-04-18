@@ -1,4 +1,3 @@
-// --- dashboard.html (Thymeleaf-enabled & responsive) ---
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,10 +8,12 @@
 <body>
   <h1>Dashboard</h1>
 
+  <!-- Welcome Message -->
   <section>
-    <h2 th:text="'Welcome, ' + ${session.userEmail}"></h2>
+    <h2 th:text="'Welcome, ' + ${userEmail}">Welcome, User</h2>
   </section>
 
+  <!-- Add Expense Form -->
   <section>
     <h2>Add Expense</h2>
     <form id="expenseForm">
@@ -23,26 +24,31 @@
     </form>
   </section>
 
+  <!-- Expense List -->
   <section>
     <h2>Expenses</h2>
     <ul id="expenseList"></ul>
   </section>
 
+  <!-- Subscription Area -->
   <section>
     <h2>Subscription</h2>
-    <div th:if="${session.premium}">
+    <div th:if="${premium}">
       <p>You are on a Premium plan.</p>
     </div>
-    <div th:unless="${session.premium}">
+    <div th:unless="${premium}">
       <button onclick="subscribeNow()">Upgrade to Premium</button>
     </div>
   </section>
 
+  <!-- AI Tax Tips -->
   <section>
-    <h2>Tax Optimization Tips</h2>
+    <h2>AI Tax Tips</h2>
     <ul id="aiTips"></ul>
+    <button onclick="loadAITips()">Show AI Suggestions</button>
   </section>
 
+  <!-- Scripts -->
   <script src="/js/app.js"></script>
   <script>
     function subscribeNow() {
@@ -50,6 +56,20 @@
         .then(res => res.json())
         .then(data => {
           window.location.href = data.url;
+        });
+    }
+
+    function loadAITips() {
+      fetch('/api/ai/recommendations/1')
+        .then(res => res.json())
+        .then(tips => {
+          const list = document.getElementById('aiTips');
+          list.innerHTML = '';
+          tips.forEach(tip => {
+            const li = document.createElement('li');
+            li.textContent = tip;
+            list.appendChild(li);
+          });
         });
     }
   </script>
