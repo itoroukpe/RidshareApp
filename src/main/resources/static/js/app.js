@@ -1,30 +1,4 @@
-// ===== Expense Form Submission =====
-document.addEventListener('DOMContentLoaded', () => {
-  const expenseForm = document.getElementById('expenseForm');
-  if (expenseForm) {
-    expenseForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const expense = Object.fromEntries(formData);
-      expense.user = { id: 1 }; // Simulate logged-in user ID
-
-      const res = await fetch('/api/expense/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(expense)
-      });
-
-      const saved = await res.json();
-      alert('Expense added: $' + saved.amount);
-      e.target.reset();
-      loadExpenses();
-    });
-
-    loadExpenses();
-  }
-});
-
-// ===== User Registration Form Submission =====
+// ===== User Registration =====
 document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('registerForm');
   if (registerForm) {
@@ -44,14 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Keep this here to ensure other components initialize properly
+  // Load expenses if form is present
   if (document.getElementById('expenseForm')) {
     loadExpenses();
   }
+
+  // Load fleet dashboard if present
+  if (document.getElementById('driverList')) {
+    loadDrivers();
+  }
 });
 
+// ===== Expense Tracking =====
+const expenseForm = document.getElementById('expenseForm');
+if (expenseForm) {
+  expenseForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const expense = Object.fromEntries(formData);
+    expense.user = { id: 1 };
 
-// ===== Load All Expenses =====
+    const res = await fetch('/api/expense/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(expense)
+    });
+
+    const saved = await res.json();
+    alert('Expense added: $' + saved.amount);
+    e.target.reset();
+    loadExpenses();
+  });
+}
+
 async function loadExpenses() {
   const res = await fetch('/api/expense/user/1');
   const expenses = await res.json();
@@ -66,7 +65,16 @@ async function loadExpenses() {
   });
 }
 
-// ===== Subscription: Redirect to Stripe Checkout =====
+// ===== IRS Forms Download =====
+function downloadScheduleC() {
+  window.open('/api/forms/schedule-c/1', '_blank');
+}
+
+function download1099() {
+  window.open('/api/forms/1099/1', '_blank');
+}
+
+// ===== Stripe Subscription Checkout =====
 function subscribeNow() {
   fetch('/api/subscription/checkout')
     .then(res => res.json())
@@ -90,16 +98,7 @@ function loadAITips() {
     });
 }
 
-// ===== IRS Forms Download =====
-function downloadScheduleC() {
-  window.open('/api/forms/schedule-c/1', '_blank');
-}
-
-function download1099() {
-  window.open('/api/forms/1099/1', '_blank');
-}
-
-// ===== Fleet Dashboard Driver Summary =====
+// ===== Fleet Dashboard =====
 async function loadDrivers() {
   const res = await fetch('/api/fleet/drivers?ownerEmail=owner@example.com');
   const drivers = await res.json();
@@ -109,14 +108,14 @@ async function loadDrivers() {
   list.innerHTML = '';
   drivers.forEach(driver => {
     const li = document.createElement('li');
-    li.textContent = driver.email + ' (' + driver.id + ')';
+    li.textContent = `${driver.email} (${driver.id})`;
     li.onclick = () => loadDriverSummary(driver.id);
     list.appendChild(li);
   });
 }
 
 async function loadDriverSummary(driverId) {
-  const res = await fetch('/api/fleet/summary/' + driverId);
+  const res = await fetch(`/api/fleet/summary/${driverId}`);
   const summary = await res.json();
   const view = document.getElementById('driverSummary');
   if (!view) return;
@@ -145,3 +144,4 @@ function aiBot(message) {
   if (message.includes('mileage')) return 'Use GPS-based tracking for accurate mileage logs.';
   return 'How can I assist with your tax needs today?';
 }
+
