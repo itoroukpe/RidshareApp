@@ -1,3 +1,8 @@
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 // --- AuthService.java ---
 @Service
 public class AuthService {
