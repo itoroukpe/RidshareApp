@@ -16,4 +16,12 @@ public class ViewController {
     public String showLoginPage() {
         return "login";
     }
+
+    @GetMapping("/fleet-dashboard")
+    public String showFleetDashboard() {
+    return "fleet-dashboard";
 }
+}
+
+
+
