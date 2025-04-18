@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+
 @Service
 public class OtpService {
     private final Map<String, String> otpStorage = new HashMap<>();
