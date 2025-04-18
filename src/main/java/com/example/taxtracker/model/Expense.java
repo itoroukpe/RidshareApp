@@ -6,3 +6,5 @@ public class Expense {
 
     // Constructors, Getters, Setters, etc.
 }
+
+
