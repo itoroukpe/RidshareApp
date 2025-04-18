@@ -1,21 +1,29 @@
-
-/* ===== General Layout ===== */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f6f8;
-  margin: 0;
-  padding: 20px;
-  color: #333;
+/* ===== CSS Variables for Theme Support ===== */
+:root {
+  --bg: #f4f6f8;
+  --text: #333;
+  --section-bg: #ffffff;
+  --border: #e0e0e0;
+  --primary: #007BFF;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 20px;
+}
+
+/* ===== Headings & Layout ===== */
 h1, h2 {
-  color: #1a1a1a;
+  color: var(--text);
   margin-top: 0;
 }
 
 section {
   margin-top: 2rem;
-  background-color: #ffffff;
+  background-color: var(--section-bg);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -44,7 +52,7 @@ select {
 input[type="submit"],
 button {
   padding: 10px;
-  background-color: #007BFF;
+  background-color: var(--primary);
   border: none;
   border-radius: 5px;
   color: white;
@@ -66,7 +74,7 @@ ul {
 
 li {
   padding: 8px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border);
 }
 
 table {
@@ -78,7 +86,7 @@ table {
 th, td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
 }
 
 /* ===== Notification & Tips ===== */
@@ -86,7 +94,7 @@ th, td {
   background-color: #f0f8ff;
   padding: 10px;
   margin: 5px 0;
-  border-left: 5px solid #007BFF;
+  border-left: 5px solid var(--primary);
 }
 
 /* ===== Chatbot Widget ===== */
@@ -96,8 +104,8 @@ th, td {
   right: 20px;
   width: 280px;
   height: 300px;
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--section-bg);
+  border: 1px solid var(--border);
   padding: 10px;
   overflow-y: auto;
   font-size: 0.9rem;
@@ -112,13 +120,13 @@ th, td {
   width: 280px;
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
 }
 
-/* ===== Fleet Dashboard Driver Summary ===== */
+/* ===== Fleet Dashboard Summary ===== */
 #driverList li {
   cursor: pointer;
-  color: #007BFF;
+  color: var(--primary);
   transition: color 0.2s;
 }
 
@@ -129,4 +137,28 @@ th, td {
 #driverSummary p {
   margin: 5px 0;
   font-weight: bold;
+}
+
+/* ===== Dark Theme ===== */
+body.dark-theme {
+  --bg: #1e1e1e;
+  --text: #e4e4e4;
+  --section-bg: #2c2c2c;
+  --border: #444;
+  --primary: #3399ff;
+}
+
+/* ===== Toggle Button for Theme ===== */
+#themeToggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  font-size: 0.9rem;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 1000;
 }
