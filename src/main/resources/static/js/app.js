@@ -83,6 +83,43 @@ function subscribeNow() {
     });
 }
 
+// ========== Subscription Checkout ==========
+function subscribeNow() {
+  fetch('/api/subscription/checkout')
+    .then(res => res.json())
+    .then(data => {
+      window.location.href = data.url;
+    })
+    .catch(err => console.error('Subscription error:', err));
+}
+
+// ========== Download IRS Forms ==========
+function downloadScheduleC() {
+  window.open('/api/forms/schedule-c/1', '_blank');
+}
+
+function download1099() {
+  window.open('/api/forms/1099/1', '_blank');
+}
+
+// ========== Load AI Tips ==========
+function loadAITips() {
+  fetch('/api/ai/recommendations/1')
+    .then(res => res.json())
+    .then(tips => {
+      const list = document.getElementById('aiTips');
+      list.innerHTML = '';
+      tips.forEach(tip => {
+        const li = document.createElement('li');
+        li.textContent = tip;
+        list.appendChild(li);
+      });
+    })
+    .catch(err => {
+      console.error('Failed to load AI tips:', err);
+    });
+}
+
 // ===== AI Tax Optimization Tips =====
 function loadAITips() {
   fetch('/api/ai/recommendations/1')
