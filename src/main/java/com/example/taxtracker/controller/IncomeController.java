@@ -1,3 +1,9 @@
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+
 // --- IncomeController.java ---
 @RestController
 @RequestMapping("/api/income")
