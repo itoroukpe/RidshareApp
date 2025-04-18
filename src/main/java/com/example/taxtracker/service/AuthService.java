@@ -1,6 +1,8 @@
 package com.example.taxtracker.service;
-
+import org.springframework.beans.factory.annotation.Autowired; // 👈 Add this
 import org.springframework.stereotype.Service;
+
+import com.example.taxtracker.repository.UserRepository; // Example of another import
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -21,4 +23,9 @@ public class AuthService {
         return userRepository.findByEmail(email)
                 .filter(u -> u.getPassword().equals(password)); // hash check in real app
     }
+}
+
+
+
+    // Other service logic...
 }
